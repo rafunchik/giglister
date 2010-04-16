@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 import java.text.ParseException
+import org.apache.commons.lang.StringUtils
 
 public class DapperGigsService {
    def urlString="http://www.trinityconcerts.de/advanced_search_result.php/all/1"
@@ -42,22 +43,25 @@ public class DapperGigsService {
                 try{
                     def date = df2.parse(ar[1])
                     c.setTime(date)
-                    c.set(Calendar.HOUR_OF_DAY,Integer.parseInt(ar[3].substring(1,3).trim()))
-                    if(ar[3].split(":").length>1)
-                    c.set(Calendar.MINUTE,Integer.parseInt(ar[3].split(":")[1]))
-                    event.startDate=c.getTime()
+                    if (ar.length>=4)
+                    {
+                      c.set(Calendar.HOUR_OF_DAY,Integer.parseInt(ar[3].substring(1,3).trim()))
+                      if(ar[3].split(":").length>1)
+                      c.set(Calendar.MINUTE,Integer.parseInt(ar[3].split(":")[1]))
+                      event.startTime=ar[3]
+                    }
+                  event.startDate=c.getTime()
                 }
                 catch(ParseException e){
-                    println "Wrong date format "+e.getMessage()
-                    log.info("Wrong date format "+e.getMessage())                    
+                  println "Wrong date format "+e.getMessage()
+                  log.info("Wrong date format "+e.getMessage())
                 }
                 catch(NumberFormatException e){
-                    println "Wrong time"
-                    log.info("Wrong time")
+                  println "Wrong time"
+                  log.info("Wrong time")
                 }
 
-                event.place=ar[2]
-                event.startTime=ar[3]
+              event.place=ar[2]
             }
 
             if (event.startDate){

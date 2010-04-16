@@ -9,19 +9,22 @@
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLinkTo(dir:'')}">Home</a></span>
             <span class="menuButton"><g:link class="list" action="list">User List</g:link></span>
-            <span class="menuButton"><g:link class="create" action="create">New User</g:link></span>
         </div>
         <div class="body">
             <h1>Edit User</h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+            <div class="message">
+                <g:message code="${flash.message}"
+                   args="${flash.args}"
+                   default="${flash.defaultMsg}"/>
+            </div>
             </g:if>
             <g:hasErrors bean="${user}">
             <div class="errors">
                 <g:renderErrors bean="${user}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form controller="user" method="post" >
+            <g:form controller="gigGoer" method="post" >
                 <input type="hidden" name="id" value="${user?.id}" />
                 <div class="dialog">
                     <table>
@@ -42,7 +45,7 @@
                               <li id="${c}">${c}
                                 %{--<div id="message-${c}" class="error"></div>--}%
                                 %{--<div id="error-${c}" class="error"></div>--}%
-                                <g:remoteLink controller="user" action="ajaxDelete" id="${c}" onComplete="artistRemoved(${c});">X</g:remoteLink>
+                                <g:remoteLink controller="gigGoer" action="ajaxDelete" id="${c}" onComplete="artistRemoved(${c});">X</g:remoteLink>
                               </li>
                               	<g:javascript>
                               	 function artistRemoved(bookId) {

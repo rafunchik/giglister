@@ -35,7 +35,9 @@
                             <tr class='prop'><td valign='top' class='name'><label for='firstName'>First Name:</label></td><td valign='top' class='value ${hasErrors(bean:user,field:'firstName','errors')}'><input type="text" id='firstName' name='firstName' value="${user?.firstName?.encodeAsHTML()}"/></td></tr>
                         
                             <tr class='prop'><td valign='top' class='name'><label for='lastName'>Last Name:</label></td><td valign='top' class='value ${hasErrors(bean:user,field:'lastName','errors')}'><input type="text" id='lastName' name='lastName' value="${user?.lastName?.encodeAsHTML()}"/></td></tr>
-                        
+
+                            <tr class='prop'><td valign='top' class='name'><label for='city'>City:</label></td><td valign='top' class='value ${hasErrors(bean:user,field:'city','errors')}'><input type="text" id='city' name='city' value="${user?.city?.encodeAsHTML()}"/></td></tr>
+
                         </tbody>
                     </table>
                 </div>

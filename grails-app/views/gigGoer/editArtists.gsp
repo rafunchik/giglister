@@ -7,7 +7,7 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><g:link class="home" controller="user" action="show" id="${session.user.id}">Home</g:link></span>
+            <span class="menuButton"><g:link class="home" controller="gigGoer" action="show" id="${session.user.id}">Home</g:link></span>
             <span class="menuButton"><g:link class="list" action="list">User List</g:link></span>
             <span class="menuButton"><g:link class="create" action="create">New User</g:link></span>
         </div>
@@ -21,7 +21,7 @@
                 <g:renderErrors bean="${user}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form controller="user" method="post" >
+            <g:form controller="gigGoer" method="post" >
                 <input type="hidden" name="userName" value="${user?.userName}" />
                 <div class="dialog">
                     <table>
@@ -29,7 +29,7 @@
                              <tr class='prop'><td valign='top' class='name'><label for='favArtists'>Fav Artists:</label></td><td valign='top' class='value ${hasErrors(bean:user,field:'favArtists','errors')}'>
                         <!--<tr>-->
                           <ul>
-                            <g:each var='c' in='${user.refresh().favArtists}'>
+                            <g:each var='c' in='${user.favArtists}'>
                               <li>${c}</li>
                             </g:each>
                           </ul>

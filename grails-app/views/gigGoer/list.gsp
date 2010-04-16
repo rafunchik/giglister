@@ -48,7 +48,7 @@
                 </table>
             </div>
             <div class="paginateButtons">
-                <g:paginate total="${User.count()}" />
+                <g:paginate total="${GigGoer.count()}" />
             </div>
         </div>
     </body>

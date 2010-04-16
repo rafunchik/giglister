@@ -1,6 +1,6 @@
 
 
-class UserController {
+class GigGoerController {
     def index = { redirect(action:list,params:params) }
 
     // the delete, save and update actions only accept POST requests
@@ -8,11 +8,11 @@ class UserController {
 
     def list = {
         if(!params.max)params.max = 10
-        [ userList: User.list( params ) ]
+        [ userList: GigGoer.list( params ) ]
     }
 
     def show = {
-        [ user : User.get( params.id ) ]
+        [ user : GigGoer.get( params.id ) ]
     }
 
     def delete = {
@@ -23,7 +23,7 @@ class UserController {
 //    		return
 //        }
 
-        def user = User.get( params.id )
+        def user = GigGoer.get( params.id )
 
         if(user) {
             user.delete()
@@ -43,7 +43,7 @@ class UserController {
 //    		return
 //        }
 
-        def user = User.get( params.id )
+        def user = GigGoer.get( params.id )
 
         if(!user) {
                 flash.message = "User not found with id ${params.id}"
@@ -62,7 +62,7 @@ class UserController {
 //    		return
 //        }
 
-        def user = User.get( params.id )
+        def user = GigGoer.get( params.id )
 
         if(user) {
              user.properties = params
@@ -81,18 +81,19 @@ class UserController {
     }
 
     def create = {
-        def user = new User()
+        def user = new GigGoer()
         user.properties = params
         return ['user':user]
     }
 
     def save = {
-        def user = new User()
+        def user = new GigGoer()
         user.properties = params
         if(user.save()) {
             flash.message = "user.saved.message"
             flash.args = [ user.firstName, user.lastName]
             flash.defaultMsg = "User Saved"
+            session.user=user
             redirect(action:show,id:user.id)
         }
         else {
@@ -101,10 +102,12 @@ class UserController {
     }
 
     def login = {
+      if (session.user)
+          redirect(action:show,id:session.user.id)
     }
 
     def handleLogin = {
-        def user = User.findByUserName(params.userName)
+        def user = GigGoer.findByUserName(params.userName)
 		if (!user) {
 			flash.message = "User not found for userName: ${params.userName}"
 			redirect(action:'login')
@@ -125,15 +128,15 @@ class UserController {
 	}
 
     def addArtist = {
-        def user=User.findByUserName(params.userName)
+        def user=GigGoer.findByUserName(params.userName)
         //def user=session.user
         //user.favArtists.add(params.fav)
         user.addToFavArtists(params.fav);
-        if(user.save(flush:true)) {
+        if(user.save()) {
             flash.message = "user.saved.message"
-        //return ['artist':artist]
- 
-        render(view:'edit',model:[user:user])
+            flash.args = [ user.firstName, user.lastName]
+            flash.defaultMsg = "User Saved"
+            render(view:'edit',model:[user:user])
         }
     }
 
@@ -145,7 +148,7 @@ class UserController {
 
     def ajaxDelete = {
       //def user=session.user
-      def user=User.findByUserName(session.user.userName)
+      def user=GigGoer.findByUserName(session.user.userName)
       user.removeFromFavArtists(params.id)
       if (user.save(flush:true))  {
 

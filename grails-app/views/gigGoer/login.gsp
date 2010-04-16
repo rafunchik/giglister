@@ -4,8 +4,9 @@
 		<meta name="layout" content="main" />
 	</head>
 	<body>
-		<div class="body">
-			<g:if test="${flash.message}">
+      <div class="body">
+        <g:if test="${!session.user}">
+            <g:if test="${flash.message}">
 				<div class="message">
 					${flash.message}
 				</div>
@@ -21,7 +22,7 @@
 						User Name:
                 </label>
                 </span>
-              <g:select name='userName' from="${User.list()}"
+              <g:select name='userName' from="${GigGoer.list()}"
 				    optionKey="userName" optionValue="userName"></g:select>
               <br />
               <div class="buttons">
@@ -30,6 +31,10 @@
                 </div>
             </g:form>
 
-		</div>
+        </g:if>
+        <g:else>
+            <%-- ${response.sendRedirect(createLink(controller: 'gigGoer', action: 'show', id:'${session.user.id}'))} --%>
+        </g:else>
+      </div>
 	</body>
 </html>

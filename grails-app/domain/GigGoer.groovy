@@ -1,4 +1,4 @@
-class User {
+class GigGoer {
   String userName
   String firstName
   String lastName
