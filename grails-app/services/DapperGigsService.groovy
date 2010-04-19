@@ -1,4 +1,6 @@
 /**
+ * Service retrieves gigs in Berlin, from trinityconcerts.de via Dapper
+ *
  * Created by IntelliJ IDEA.
  * User: rcastro
  * Date: 05-Jan-2009
@@ -6,32 +8,35 @@
  * To change this template use File | Settings | File Templates.
  */
 import java.text.ParseException
-import org.apache.commons.lang.StringUtils
+import org.springframework.beans.factory.InitializingBean
 
-public class DapperGigsService {
-   def urlString="http://www.trinityconcerts.de/advanced_search_result.php/all/1"
-   boolean transactional = true
+public class DapperGigsService implements InitializingBean{
+  def urlString="http://www.trinityconcerts.de/advanced_search_result.php/all/1"
+  static transactional = true
+  def base = "http://www.dapper.net/RunDapp?&&"
+  def grailsApplication
+  def setting
+  def sessionFactory
 
-   def getEvents(String city){
+  void afterPropertiesSet() { this.setting = grailsApplication.config.setting }
+
+  def getEvents(String city){
      if(city.equalsIgnoreCase("Berlin"))
-         return getEvents() 
+         return getEvents()
    }
-
-   def getEvents() {
-      def base = "http://www.dapper.net/RunDapp?&&"
+  def getEvents() {
       def qs = []
         qs << "dappName=trinityconcertsde"
         qs << "v=1"
         qs << "applyToUrl="+urlString
       def url = new URL(base + qs.join("&"))
       def connection = url.openConnection()
-       
-
       def results
       if(connection.responseCode == 200){
         def xml = connection.content.text
         def lfm = new XmlSlurper().parseText(xml)
         results = lfm.Gig
+        def i=0
         results.each {
             def artist=it.Artist.text()
             def event=new Event(artist:artist,name:artist,city:"Berlin",description:it.Price.text())
@@ -70,11 +75,14 @@ public class DapperGigsService {
                     log.info("Event already saved")
                 }
                 else{
-                    if( !event.save(flush:true) ) {
+                    if( !event.save() ) {
                            event.errors.each {
                                 println it
                              }
                         }
+                  if(i % 100 == 0)
+                     sessionFactory.getCurrentSession().clear();
+                  i++
                 }
 
             }

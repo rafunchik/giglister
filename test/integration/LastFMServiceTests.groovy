@@ -14,9 +14,7 @@ def url
       assertEquals "Connection with LastFm broken",connection.responseCode,200
     }
 
-
     void testgetEventsByCity() {
-      lastFMService=new LastFMService()
       def list=lastFMService.getEvents(url)
       assert list.size()>0 : "Got no events from LAstFM"
 

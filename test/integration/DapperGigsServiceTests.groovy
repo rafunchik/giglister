@@ -16,7 +16,6 @@ def urlString="http://www.trinityconcerts.de/advanced_search_result.php/all/1"
 
 
     void testgetEvents() {
-      dapperGigsService=new DapperGigsService()
       def list=dapperGigsService.getEvents()
       assert list.size()>0 : "Got no events from Dapper: trinity"
 

@@ -12,10 +12,10 @@ class EventUpdaterJob {
         dapperGigsService.getEvents()
         Event.cities.each
         {
-            for (int i=0;i<Math.min(lastFMService.getTotalPagesByCity(it),10);i++){
+            for (int i=0;i<Math.min(lastFMService.getTotalPagesByCity(it),lastFMService.MAX_PAGES);i++){
                    lastFMService.getEventsByCity(it,i+1)
             }
         }
-        log.println("Event updater ran")
+        log.println("Event updater ran at: "+new Date())
     }
 }

@@ -1,7 +1,14 @@
-class LastFMService {
+import org.springframework.beans.factory.InitializingBean
 
-  boolean transactional = true
-  final def MAX_PAGES = 100
+class LastFMService implements InitializingBean{
+
+  static transactional = true
+  final def MAX_PAGES = 20
+  def grailsApplication
+  def setting
+  def sessionFactory
+
+  void afterPropertiesSet() { this.setting = grailsApplication.config.setting } 
 
   def base = "http://ws.audioscrobbler.com/2.0/?"
   // http://ws.audioscrobbler.com/2.0/?method=geo.getevents&country=spain&api_key=f8fd68b1cf891056c71422b3043c1208...
@@ -66,6 +73,7 @@ class LastFMService {
         def xml = connection.content.text
         def lfm = new XmlSlurper().parseText(xml)
         results = lfm.events.event
+        def i=0
         results.each {
             /*def artists =new String()
             it.artists.artist.each{
@@ -105,13 +113,15 @@ class LastFMService {
                 //added from giglister-copy
                 //def event=new Event(artist:artist,name:it.title.text(),description:description,city:it.venue.location.city.text(),place:place,startDate:date,startTime:time)
 
-                if( !event.save(flush:true) ) {
+                if( !event.save() ) {
                    event.errors.each {
                         println it
                         log.error(it)
                    }
                 }
-                
+                if(i % 100 == 0)
+                   sessionFactory.getCurrentSession().clear();
+                i++
 
             }
 
