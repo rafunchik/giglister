@@ -28,4 +28,4 @@ stacktrace.log
 
 devDB.*
 .idea/workspace.xml
-
+.gitignore

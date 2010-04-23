@@ -1,4 +1,5 @@
-import grails.converters.*  
+import grails.converters.*
+import org.apache.commons.lang.StringUtils
 
 class EventController {
      def lastFMService
@@ -121,30 +122,40 @@ class EventController {
       //deleteEvents()
       if(Event.count()<10)
         this.events()
-      def user=session.user
-      if (!user){
-        flash.message="User not found"
-        redirect (action:list)
-      }
       if(!params.max) params.max = 20
       if (!params.offset)
         params.offset = 0
-      def hibSession=sessionFactory.getCurrentSession()
-      hibSession.refresh(user)
       def events=[]
-      def city=user.city
-      if (params.city)
-         city=params.city
-      for (artist in user.favArtists){
-          //change for case insensitive Criteria
-          events.addAll(Event.findAllByArtistIlikeAndCity('%'+artist+'%',city,[max:params.max,offset:params.offset,sort:"startDate", order:"asc"]))
-          //[max:params.max,offset:params.offset,sort:"startDate", order:"asc"]
-            //render(view:list,var:[events:events,totalEvents:12])
+      def city=params.city
+      def user=session.user
+      if (user)
+      {
+         def hibSession=sessionFactory.getCurrentSession()
+         hibSession.refresh(user)
+         city=user.city
+         for (artist in user.favArtists){
+            //change for case insensitive Criteria
+            events.addAll(getEventsByCityAndArtist(artist, city, params))
+            //[max:params.max,offset:params.offset,sort:"startDate", order:"asc"]
+              //render(view:list,var:[events:events,totalEvents:12])
+         }
+      }
+      else
+      {
+         def artist=params.artist
+         if(StringUtils.isNotBlank(city) && StringUtils.isNotBlank(artist))
+         {
+            events.addAll(getEventsByCityAndArtist(artist, city, params))
+         }
       }
       return [ "events": events,"totalEvents":events.size()]
     }
 
-    private void deleteEvents()
+  private List getEventsByCityAndArtist(artist, city, Map params) {
+    return Event.findAllByArtistIlikeAndCity('%' + artist + '%', city, [max: params.max, offset: params.offset, sort: "startDate", order: "asc"])
+  }
+
+  private void deleteEvents()
     {
         Date date=new Date()-7;
         Event.list().each{

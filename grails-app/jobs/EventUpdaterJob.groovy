@@ -5,7 +5,7 @@ class EventUpdaterJob {
     def lastFMService
 
     static triggers = {
-        cronTrigger startDelay:100000, cronExpression: '0 0 4 * * ?'
+        cronTrigger startDelay:100000, cronExpression: '0 0 5 * * ?'
     }
 
     def execute() {

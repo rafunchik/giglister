@@ -7,7 +7,7 @@ class EventDeleteJob {
     def group = "events"
     def name = "EventDeleteJob" 
     static triggers = {
-        cronTrigger startDelay:100000, cronExpression: '0 0 5 ? * TUE'
+        cronTrigger startDelay:100000, cronExpression: '0 0 2 ? * TUE'
 
     }
 
@@ -21,7 +21,7 @@ class EventDeleteJob {
         //Event.findByStartDateBefore(date).each{
           //  it.delete()
         //}
-        log.println("Event delete ran at: "+new Date().getTime())
+        log.println("Event delete ran at: "+new Date())
     }
 
 

@@ -37,10 +37,11 @@
 
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="city">City:</label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean:event,field:'city','errors')}">
-                                    <input type="text" id="city" name="city" value="${fieldValue(bean:event,field:'city')}"/>
+                                    %{--<label for="city">City:</label>--}%
+                                %{--</td>--}%
+                                %{--<td valign="top" class="value ${hasErrors(bean:event,field:'city','errors')}">--}%
+                                    %{--<input type="text" id="city" name="city" value="${fieldValue(bean:event,field:'city')}"/>--}%
+                                      <g:select name="city" id="city" from="${Event.cities}" value="${fieldValue(bean:event,field:'city')}" noSelection="['null':'Choose a city...']" />
                                 </td>
                             </tr>
 

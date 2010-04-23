@@ -107,8 +107,8 @@ class LastFMService implements InitializingBean{
                     log.info("Event already saved")
             }
             else{
-                //def description=it.description.text().replaceAll("<img src(.)+/>", "<br />").replaceAll("<object(.)+/object>", "<br />")
-                def description=it.description.text().replaceAll("<(.)+>","html")
+                def description=it.description.text().replaceAll("<img src(.)+/>", "<br />").replaceAll("<object(.)+/object>", "<br />")
+                //def description=it.description.text().replaceAll("<(.)+>","html")
                 def event=new Event(artist:artist,country:it.venue.location.country.text(),description:"description",city:it.venue.location.city.text(),name:it.title.text(),place:place,startDate:date,startTime:time)
                 //added from giglister-copy
                 //def event=new Event(artist:artist,name:it.title.text(),description:description,city:it.venue.location.city.text(),place:place,startDate:date,startTime:time)

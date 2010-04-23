@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><g:link class="home" controller="gigGoer" action="show" id="${session.user.id}">Home</g:link></span>
+            <span class="menuButton"><g:link class="home" controller="gigGoer" action="show" id="${session.user?.id}">Home</g:link></span>
             <span class="menuButton"><g:link class="create" action="create">New Event</g:link></span>
             <span class="menuButton">Current city: <g:if test="${params.city}">${params.city}</g:if><g:else>${session.user.city}</g:else></span>
         </div>

@@ -20,7 +20,7 @@
 			</div>
 
 			<div id="header">
-               <h1>Collab-Todo</h1>
+               <h1>Gig lister</h1>
             </div>
 
 			<div id="content">

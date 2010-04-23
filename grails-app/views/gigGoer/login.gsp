@@ -15,6 +15,17 @@
           <p>
           Welcome to your gigs list. Login below or create a new user: <span class="menuButton"><g:link class="create" action="create">New User</g:link></span>
           </p>
+          <p>
+          You can also search for a specific artist and city without registering:
+            
+            <g:form controller="event" method="post" >
+              Artist: <g:textField name="artist" value="${artist}"/>
+              %{--<g:textField name="city" value="${city}" />--}%
+              <g:select name="city" from="${Event.cities}" value="${city}" noSelection="['null':'Choose a city...']" />
+              <g:actionSubmit value="GetMyEvents"/>
+            </g:form>
+          </p>
+  
           <g:form action="handleLogin" method="post" >
 
               </br>
