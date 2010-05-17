@@ -48,12 +48,13 @@ public class DapperGigsService implements InitializingBean{
                 try{
                     def date = df2.parse(ar[1])
                     c.setTime(date)
-                    if (ar.length>=4)
+                    if (ar.length>=5)
                     {
-                      c.set(Calendar.HOUR_OF_DAY,Integer.parseInt(ar[3].substring(1,3).trim()))
-                      if(ar[3].split(":").length>1)
-                      c.set(Calendar.MINUTE,Integer.parseInt(ar[3].split(":")[1]))
-                      event.startTime=ar[3]
+                      String [] time=ar[4].trim().split("[\\.:]")
+                      c.set(Calendar.HOUR_OF_DAY,Integer.parseInt(time[0]))
+                      if(time.length>1)
+                      c.set(Calendar.MINUTE,Integer.parseInt(time[1]))
+                      event.startTime=ar[4]
                     }
                   event.startDate=c.getTime()
                 }

@@ -126,7 +126,9 @@ class EventController {
       if (!params.offset)
         params.offset = 0
       def events=[]
-      def city=params.city
+      def city
+      if(params.city)
+        city=params.city
       def user=session.user
       if (user)
       {

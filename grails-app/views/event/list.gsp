@@ -8,10 +8,8 @@
     </head>
     <body>
         <div class="nav">
-            <g:if test="${session.user}">
-                <span class="menuButton"><a class="home" href="${createLinkTo(dir:'')}">Home</a></span>
-            </g:if>
-            <span class="menuButton"><g:link class="create" action="create">New Event</g:link></span>
+              <span class="menuButton"><a class="home" href="${createLinkTo(dir:'')}">Home</a></span>
+              <span class="menuButton"><g:link class="create" action="create">New Event</g:link></span>
         </div>
         <div class="body">
             <h1>Event List</h1>

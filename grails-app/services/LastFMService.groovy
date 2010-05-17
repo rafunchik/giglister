@@ -80,28 +80,30 @@ class LastFMService implements InitializingBean{
                artists<<it.artist.text()
             } */
             def place=it.venue.location.street.text()+", "+it.venue.location.postalcode.text()
-    
-            
 
-
-            def df2 = new java.text.SimpleDateFormat("EEE, dd MMM yyyy")
+            def df2 = new java.text.SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss")
             def date = df2.parse(it.startDate.text())
-            def time =it.startTime.text()
-            if(time){
-                Calendar c=Calendar.getInstance()
-                c.setTime(date)
-                try{
-                    c.set(Calendar.HOUR_OF_DAY,Integer.parseInt(time.split(":")[0]))
-                    c.set(Calendar.MINUTE,Integer.parseInt(time.split(":")[1]))
-                    date=c.getTime()
-                }
-                catch(NumberFormatException e){
-                    println "Wrong time"
-                }
-            }
+            Calendar c=Calendar.getInstance()
+            c.setTime(date)
+            
+            def time=c.get(Calendar.HOUR_OF_DAY).toString()+":"+c.get(Calendar.MINUTE)
+//            def time =it.startTime.text()
+//            if(time){
+//                Calendar c=Calendar.getInstance()
+//                c.setTime(date)
+//                try{
+//                    c.set(Calendar.HOUR_OF_DAY,Integer.parseInt(time.split(":")[0]))
+//                    c.set(Calendar.MINUTE,Integer.parseInt(time.split(":")[1]))
+//                    date=c.getTime()
+//                }
+//                catch(NumberFormatException e){
+//                    println "Wrong time"
+//                }
+//            }
 
 
             def artist=it.artists.headliner.text()
+          //move method  somehwre else
             if(DapperGigsService.checkSaved(artist,date)){
                     //event already saved
                     log.info("Event already saved")
