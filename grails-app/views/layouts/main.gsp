@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title><g:layoutTitle default="Giglister /></title>
+        <title><g:layoutTitle default="Giggoer /></title>
         <link rel="stylesheet" href="${createLinkTo(dir:'css',file:'main.css')}" />
         <link rel="shortcut icon" href="${createLinkTo(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
         <g:layoutHead />
@@ -20,7 +20,7 @@
 			</div>
 
 			<div id="header">
-               <h1>Gig lister</h1>
+               <h1><a class="home" href="${createLinkTo(dir:'')}">Gigs listing</a></h1>
             </div>
 
 			<div id="content">

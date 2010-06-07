@@ -11,20 +11,22 @@
 					${flash.message}
 				</div>
 			</g:if>
-
+          </br>
           <p>
-          Welcome to your gigs list. Login below or create a new user: <span class="menuButton"><g:link class="create" action="create">New User</g:link></span>
+          Welcome to your gigs list. Login below or create a new user:   <span class="menuButton"><g:link class="create" action="create">New User</g:link></span>
           </p>
+          </br>
           <p>
           You can also search for a specific artist and city without registering:
-            
+          </p>
+          </br>  
             <g:form controller="event" method="post" >
               Artist: <g:textField name="artist" value="${artist}"/>
               %{--<g:textField name="city" value="${city}" />--}%
               <g:select name="city" from="${Event.cities}" value="${city}" noSelection="['null':'Choose a city...']" />
               <g:actionSubmit value="GetMyEvents"/>
             </g:form>
-          </p>
+
   
           <g:form action="handleLogin" method="post" >
 
