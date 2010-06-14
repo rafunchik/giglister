@@ -12,13 +12,22 @@
                 <span class="menuButton"><g:link class="home" controller="gigGoer" action="show" id="${session.user.id}">Home</g:link></span>
             </g:if>
           <span class="menuButton"><g:link class="create" action="create">New Event</g:link></span>
-            <span class="menuButton">Current city: <g:if test="${params.city}">${params.city}</g:if><g:else>${session.user.city}</g:else></span>
+          <g:if test="${params?.city}">
+            <g:set var="city" value=${params.city}/>
+          </g:if>
+          <g:else>
+            <g:if test="${session?.user?.city}">
+              <g:set var="city" value=${session.user.city}/>
+            </g:if>          	
+            <g:else>
+              <g:set var="city" value="London"/>
+            </g:else>
+          </g:else>  
+            <span class="menuButton">Current city: ${city}</span>
         </div>
         <div class="body">
 
             <g:form controller="event" method="post" >
-              %{--<g:textField name="city" value="${city}" />--}%
-              <g:if test="${params} && ${params.city}"><g:set var="city" value="${params.city}"/></g:if><g:else><g:set var="city" value="${session.user.city}"/></g:else> 
               <g:select name="city" from="${Event.cities}" value="${city}" noSelection="['null':'Choose another city...']" />
               <g:actionSubmit value="GetMyEvents"/>
             </g:form>
